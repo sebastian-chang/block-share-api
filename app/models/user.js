@@ -10,7 +10,23 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  token: String
+  firstName: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  lastName: {
+    type: String,
+    required: false,
+    unique: false,
+  },
+  userName: {
+    type: String,
+    required: false,
+    sparse: true,
+    unique: true,
+  },
+  token: String,
 }, {
   timestamps: true,
   toObject: {
@@ -18,8 +34,18 @@ const userSchema = new mongoose.Schema({
     transform: (_doc, user) => {
       delete user.hashedPassword
       return user
-    }
-  }
+    },
+    virtuals: true,
+  },
+  toJSON: {
+    virtuals: true,
+  },
 })
 
-module.exports = mongoose.model('User', userSchema)
+userSchema.virtual('fullName').get(function () {
+  return this.firstName + ' ' + this.lastName
+})
+
+const User = mongoose.model('User', userSchema)
+
+module.exports = User

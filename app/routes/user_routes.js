@@ -43,9 +43,11 @@ router.post('/sign-up', (req, res, next) => {
     .then(() => bcrypt.hash(req.body.credentials.password, bcryptSaltRounds))
     .then(hash => {
       // return necessary params to create a user
+      console.log(req.body.credentials)
       return {
         email: req.body.credentials.email,
-        hashedPassword: hash
+        userName: req.body.credentials.email,
+        hashedPassword: hash,
       }
     })
     // create user with provided email and hashed password
@@ -135,6 +137,20 @@ router.delete('/sign-out', requireToken, (req, res, next) => {
   // save the token and respond with 204
   req.user.save()
     .then(() => res.sendStatus(204))
+    .catch(next)
+})
+
+router.get('/users', (req, res, next) => {
+  User.find()
+    .then(users => {
+      // `examples` will be an array of Mongoose documents
+      // we want to convert each one to a POJO, so we use `.map` to
+      // apply `.toObject` to each one
+      return users.map(user => user.toObject())
+    })
+    // respond with status 200 and JSON of the examples
+    .then(users => res.status(200).json({ users: users }))
+    // if an error occurs, pass it to the handler
     .catch(next)
 })
 
