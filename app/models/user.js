@@ -45,6 +45,11 @@ const userSchema = new mongoose.Schema({
 userSchema.virtual('fullName').get(function () {
   return this.firstName + ' ' + this.lastName
 })
+userSchema.virtual('hasFullName').get(function () {
+  if(this.firstName || this.lastName){
+    return true
+  }
+})
 
 const User = mongoose.model('User', userSchema)
 

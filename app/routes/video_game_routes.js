@@ -43,12 +43,27 @@ router.get('/video-games', requireToken, (req, res, next) => {
     // if an error occurs, pass it to the handler
     .catch(next)
 })
+// INDEX for specific issue
+// GET /video-games-user 
+router.get('/video-games-user', requireToken, (req, res, next) => {
+  VideoGame.find({owner: req.user.id})
+    .then(videoGames => {
+      // `videoGames` will be an array of Mongoose documents
+      // we want to convert each one to a POJO, so we use `.map` to
+      // apply `.toObject` to each one
+      return videoGames.map(videoGame => videoGame.toObject())
+    })
+    // respond with status 200 and JSON of the video games
+    .then(videoGames => res.status(200).json({ videoGames: videoGames }))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
 
 // SHOW
 // GET /video-games/5a7db6c74d55bc51bdf39793
 router.get('/video-games/:id', requireToken, (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
-  VideoGame.findById(req.params.id)
+  VideoGame.findById(req.params.id).populate('owner')
     .then(handle404)
     // if `findById` is succesful, respond with 200 and "video game" JSON
     .then(videoGame => res.status(200).json({ videoGame: videoGame.toObject() }))

@@ -1,5 +1,20 @@
 const mongoose = require('mongoose')
 
+const commentSchema = new mongoose.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    content: {
+        type: String,
+        required: true,
+    },
+    owner: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
+})
+
 const videoGameSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -31,6 +46,7 @@ const videoGameSchema = new mongoose.Schema({
         required: true,
         default: true,
     },
+    comment: [commentSchema],
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
@@ -46,7 +62,7 @@ const videoGameSchema = new mongoose.Schema({
     },
 })
 
-videoGameSchema.virtual('ESRB Rating').get(function (){
+videoGameSchema.virtual('ESRB').get(function (){
     if(this.rating === 'e') {
         return 'E for Everyone'
     }
