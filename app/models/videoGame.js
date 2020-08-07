@@ -79,5 +79,22 @@ videoGameSchema.virtual('ESRB').get(function (){
         return 'Rating Pending'
     }
 })
+videoGameSchema.virtual('test').get(function () {
+    return 'Does this works?'
+})
+videoGameSchema.virtual('console').get(function () {
+    if (this.platform === 'xbox') {
+        return 'Microsoft Xbox One'
+    }
+    if (this.platform === 'ps4') {
+        return 'Sony Playstion 4'
+    }
+    if (this.platform === 'ns') {
+        return 'Nintendo Switch'
+    }
+    if (this.platform === 'pc') {
+        return 'Personal Computer'
+    }
+})
 
 module.exports = mongoose.model('VideoGame', videoGameSchema)

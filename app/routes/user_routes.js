@@ -34,8 +34,8 @@ router.post('/sign-up', (req, res, next) => {
     // the password is an empty string
     .then(credentials => {
       if (!credentials ||
-          !credentials.password ||
-          credentials.password !== credentials.password_confirmation) {
+        !credentials.password ||
+        credentials.password !== credentials.password_confirmation) {
         throw new BadParamsError()
       }
     })
@@ -124,6 +124,22 @@ router.patch('/change-password', requireToken, (req, res, next) => {
       // set and save the new hashed password in the DB
       user.hashedPassword = hash
       return user.save()
+    })
+    // respond with no content and status 200
+    .then(() => res.sendStatus(204))
+    // pass any errors along to the error handler
+    .catch(next)
+})
+// UPDATE user information
+// PATCH /update-user
+router.patch('/update-user', requireToken, (req, res, next) => {
+  let user
+  // `req.user` will be determined by decoding the token payload
+  User.findById(req.user.id)
+    // save user outside the promise chain
+    .then(record => {
+      // requireOwnership(req, record)
+      return record.updateOne(req.body.user)
     })
     // respond with no content and status 200
     .then(() => res.sendStatus(204))
