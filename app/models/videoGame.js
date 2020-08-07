@@ -72,15 +72,9 @@ videoGameSchema.virtual('ESRB').get(function (){
     if(this.rating === 'm') {
         return 'M for Mature'
     }
-    if(this.rating === 'a') {
-        return 'Adults only 18+'
-    }
     if(this.rating === 'rp') {
         return 'Rating Pending'
     }
-})
-videoGameSchema.virtual('test').get(function () {
-    return 'Does this works?'
 })
 videoGameSchema.virtual('console').get(function () {
     if (this.platform === 'xbox') {
