@@ -90,5 +90,8 @@ videoGameSchema.virtual('console').get(function () {
         return 'Personal Computer'
     }
 })
+videoGameSchema.virtual('hasPoster').get(function () {
+    return (this.poster !== '')
+})
 
 module.exports = mongoose.model('VideoGame', videoGameSchema)
