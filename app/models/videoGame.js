@@ -44,7 +44,7 @@ const videoGameSchema = new mongoose.Schema({
     isAvailable: {
         type: Boolean,
         required: true,
-        default: true,
+        default: false,
     },
     comment: [commentSchema],
     owner: {
@@ -76,6 +76,21 @@ videoGameSchema.virtual('ESRB').get(function (){
         return 'Rating Pending'
     }
 })
+videoGameSchema.virtual('ESRBFileName').get(function () {
+    if (this.rating === 'e') {
+        return 'ESRB_2013_Everyone.svg'
+    }
+    if (this.rating === 't') {
+        return 'ESRB_2013_Teen.svg'
+    }
+    if (this.rating === 'm') {
+        return 'ESRB_2013_Mature.svg'
+    }
+    if (this.rating === 'rp') {
+        return 'ESRB_2013_Rating_Pending.svg'
+    }
+})
+
 videoGameSchema.virtual('console').get(function () {
     if (this.platform === 'xbox') {
         return 'Microsoft Xbox One'
@@ -88,6 +103,34 @@ videoGameSchema.virtual('console').get(function () {
     }
     if (this.platform === 'pc') {
         return 'Personal Computer'
+    }
+})
+videoGameSchema.virtual('consoleColor').get(function () {
+    if (this.platform === 'xbox') {
+        return 'green'
+    }
+    if (this.platform === 'ps4') {
+        return 'blue'
+    }
+    if (this.platform === 'ns') {
+        return 'red'
+    }
+    if (this.platform === 'pc') {
+        return 'black'
+    }
+})
+videoGameSchema.virtual('consoleFileName').get(function () {
+    if (this.platform === 'xbox') {
+        return 'xbox-one.png'
+    }
+    if (this.platform === 'ps4') {
+        return 'ps4.png'
+    }
+    if (this.platform === 'ns') {
+        return 'nintendo-switch.jpg'
+    }
+    if (this.platform === 'pc') {
+        return 'black'
     }
 })
 videoGameSchema.virtual('hasPoster').get(function () {
