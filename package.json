@@ -4,11 +4,11 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "test": "mocha --exit",
-    "server": "nodemon server.js",
-    "serve": "nodemon server.js",
-    "s": "nodemon server.js",
+    "server": "node server.js",
+    "serve": "node server.js",
+    "s": "node server.js",
     "debug-server": "DEBUG=express:* nodemon server.js"
   },
   "author": "",
