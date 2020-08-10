@@ -62,6 +62,7 @@ const videoGameSchema = new mongoose.Schema({
     },
 })
 
+// Virtuals for additional information
 videoGameSchema.virtual('ESRB').get(function (){
     if(this.rating === 'e') {
         return 'E for Everyone'
@@ -76,6 +77,7 @@ videoGameSchema.virtual('ESRB').get(function (){
         return 'Rating Pending'
     }
 })
+// Get image for each rating
 videoGameSchema.virtual('ESRBFileName').get(function () {
     if (this.rating === 'e') {
         return 'ESRB_2013_Everyone.svg'
@@ -90,7 +92,7 @@ videoGameSchema.virtual('ESRBFileName').get(function () {
         return 'ESRB_2013_Rating_Pending.svg'
     }
 })
-
+// Returns name of console
 videoGameSchema.virtual('console').get(function () {
     if (this.platform === 'xbox') {
         return 'Microsoft Xbox One'
@@ -105,6 +107,7 @@ videoGameSchema.virtual('console').get(function () {
         return 'Personal Computer'
     }
 })
+// Returns color of console
 videoGameSchema.virtual('consoleColor').get(function () {
     if (this.platform === 'xbox') {
         return 'green'
@@ -119,6 +122,7 @@ videoGameSchema.virtual('consoleColor').get(function () {
         return 'black'
     }
 })
+// Gets image for console
 videoGameSchema.virtual('consoleFileName').get(function () {
     if (this.platform === 'xbox') {
         return 'xbox-one.png'
@@ -133,6 +137,7 @@ videoGameSchema.virtual('consoleFileName').get(function () {
         return 'black'
     }
 })
+// Returns true if the user has enter a URL for the poster image
 videoGameSchema.virtual('hasPoster').get(function () {
     return (this.poster !== '')
 })
