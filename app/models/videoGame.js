@@ -134,7 +134,7 @@ videoGameSchema.virtual('consoleFileName').get(function () {
         return 'nintendo-switch.jpg'
     }
     if (this.platform === 'pc') {
-        return 'black'
+        return 'pc-gaming.png'
     }
 })
 // Returns true if the user has enter a URL for the poster image
