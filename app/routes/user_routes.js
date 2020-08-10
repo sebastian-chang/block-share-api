@@ -135,14 +135,11 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 router.patch('/update-user', requireToken, (req, res, next) => {
   let user
   // `req.user` will be determined by decoding the token payload
-  User.findById(req.user.id)
+  // User.findById(req.user.id)
+  User.findByIdAndUpdate(req.user.id, req.body.user, {new: true})
     // save user outside the promise chain
-    .then(record => {
-      // requireOwnership(req, record)
-      return record.updateOne(req.body.user)
-    })
-    // respond with no content and status 200
-    .then(() => res.sendStatus(204))
+    // respond with updated user content and status 201
+    .then(user => res.status(201).json({ user: user.toObject() }))
     // pass any errors along to the error handler
     .catch(next)
 })
