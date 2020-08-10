@@ -135,14 +135,11 @@ router.patch('/change-password', requireToken, (req, res, next) => {
 router.patch('/update-user', requireToken, (req, res, next) => {
   let user
   // `req.user` will be determined by decoding the token payload
-  User.findById(req.user.id)
+  // User.findById(req.user.id)
+  User.findByIdAndUpdate(req.user.id, req.body.user, {new: true})
     // save user outside the promise chain
-    .then(record => {
-      // requireOwnership(req, record)
-      return record.updateOne(req.body.user)
-    })
-    // respond with no content and status 200
-    .then(() => res.sendStatus(204))
+    // respond with updated user content and status 201
+    .then(user => res.status(201).json({ user: user.toObject() }))
     // pass any errors along to the error handler
     .catch(next)
 })
@@ -156,18 +153,19 @@ router.delete('/sign-out', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-router.get('/users', (req, res, next) => {
-  User.find()
-    .then(users => {
-      // `examples` will be an array of Mongoose documents
-      // we want to convert each one to a POJO, so we use `.map` to
-      // apply `.toObject` to each one
-      return users.map(user => user.toObject())
-    })
-    // respond with status 200 and JSON of the examples
-    .then(users => res.status(200).json({ users: users }))
-    // if an error occurs, pass it to the handler
-    .catch(next)
-})
+// For troubleshooting purposes
+// router.get('/users', (req, res, next) => {
+//   User.find()
+//     .then(users => {
+//       // `examples` will be an array of Mongoose documents
+//       // we want to convert each one to a POJO, so we use `.map` to
+//       // apply `.toObject` to each one
+//       return users.map(user => user.toObject())
+//     })
+//     // respond with status 200 and JSON of the examples
+//     .then(users => res.status(200).json({ users: users }))
+//     // if an error occurs, pass it to the handler
+//     .catch(next)
+// })
 
 module.exports = router
