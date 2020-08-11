@@ -75,6 +75,6 @@ All data returned from API actions is formatted as JSON.
 
 #### ERD:
 
-![wireframe](https://git.generalassemb.ly/sebastian-chang/full-stack-project-practice/blob/response/images/Block-Borrow-ERD.jpg)
+![wireframe](https://github.com/sebastian-chang/block-share/blob/master/public/images/Block-Share-ERD.jpg)
 
 ---
