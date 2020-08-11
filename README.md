@@ -9,8 +9,9 @@ With this application you can search video game postings in your neighborhood.  
 ## Important Links
 
 - [Deployed API Repo](https://github.com/sebastian-chang/block-share-api)
+- [Deployed API]( https://shrouded-woodland-10861.herokuapp.com)
 - [Deployed Repo](https://github.com/sebastian-chang/block-share)
-- [Deployed Client](https://sebastian-chang.github.io/block-share/)
+- [Deployed Client](https://sebastian-chang.github.io/block-share)
 
 ## Planning Story
 
